@@ -83,7 +83,7 @@ Below is a checklist of notebooks from the original HuggingFace Agents course an
 - Building with SmoL Agents
   - [x] code_agents.ipynb --> code_agents.py
   - [ ] tools.ipynb --> tools.py
-  - [ ] tool_calling_agents.ipynb --> tool_calling_agents.py
+  - [x] tool_calling_agents.ipynb --> tool_calling_agents.py
   - [ ] vision_agents.ipynb --> vision_agents.py
   - [ ] multiagent_notebook.ipynb --> multiagent.py
 - Building with LlamaIndex
