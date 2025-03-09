@@ -1,5 +1,5 @@
 [project]
-name = "hg-agents-course-marimo"
+name = "hf-agents-course-marimo"
 version = "0.1.0"
 description = "Hugging Face Agents Course notebooks ported to marimo with uv package management"
 readme = "README.md"
