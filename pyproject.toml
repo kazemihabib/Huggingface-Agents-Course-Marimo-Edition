@@ -4,9 +4,9 @@ version = "0.1.0"
 description = "Hugging Face Agents Course notebooks ported to marimo with uv package management"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
-
-[dependency-groups]
-dev = [
+dependencies = [
     "marimo>=0.11.17",
 ]
+
+[dependency-groups]
+dev = [ ]
