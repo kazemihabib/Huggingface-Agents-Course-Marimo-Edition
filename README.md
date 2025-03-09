@@ -112,7 +112,7 @@ notebook_login()
 
 This is because Marimo doesn't support ipywidgets, which `notebook_login()` depends on. Ideally, HuggingFace should migrate to anywidget for better compatibility with modern notebook environments like Marimo.
 
-**Workaround:** I Used the token-based login approach instead:
+**Workaround:** I used the token-based login approach instead:
 
 ```python
 from huggingface_hub import login
