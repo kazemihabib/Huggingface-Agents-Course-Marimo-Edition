@@ -1,6 +1,6 @@
 # 🤗 HuggingFace Agents Course: Marimo Notebook Edition
 
-This repository transforms the popular [HuggingFace Agents course](https://github.com/huggingface/agents-course) notebooks into interactive [Marimo](https://marimo.io) notebooks. Marimo is a reactive Python notebook that's reproducible, git-friendly, and deployable as scripts or apps. These converted notebooks make the course material more interactive and easier to work with. 
+This repository transforms the popular [HuggingFace Agents course](https://github.com/huggingface/agents-course) notebooks into [Marimo](https://marimo.io) notebooks. Marimo is a reactive Python notebook that's reproducible, git-friendly, and deployable as scripts or apps.
 
 ## 📝 Motivation
 
@@ -8,7 +8,7 @@ While working through the HuggingFace Agents course,
 I decided to convert the original Jupyter notebooks into Marimo format.
 This process serves as both a learning exercise to master Marimo's capabilities
 and creates a resource for others interested in experiencing the course content
-through a more interactive and maintainable notebook environment.
+through a reactive and maintainable notebook environment.
 
 ## 🌟 Why Marimo
 
