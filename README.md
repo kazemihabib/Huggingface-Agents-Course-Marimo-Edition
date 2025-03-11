@@ -150,6 +150,7 @@ import smolagents.tools
 import smolagents.tool_validation
 smolagents.tools.get_source = monekey_patched_get_source
 smolagents.tool_validation.get_source = monekey_patched_get_source
+```
 
 ## 🤝 Contributing
 

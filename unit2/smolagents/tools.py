@@ -86,10 +86,10 @@ def _(mo):
 
 @app.cell
 def _():
-    # model_id='Qwen/Qwen2.5-Coder-32B-Instruct'# it is possible that this model may be overloaded
+    model_id='Qwen/Qwen2.5-Coder-32B-Instruct'# it is possible that this model may be overloaded
 
     # If the agent does not answer, the model is overloaded, please use another model or the following Hugging Face Endpoint that also contains qwen2.5 coder:
-    model_id = "https://pflgm2locj2t89co.us-east-1.aws.endpoints.huggingface.cloud"
+    # model_id = "https://pflgm2locj2t89co.us-east-1.aws.endpoints.huggingface.cloud"
     return (model_id,)
 
 
@@ -193,13 +193,7 @@ def _(mo):
 
 
 @app.cell
-def _(mo):
-    ### TODO(Find a way to make push_to_hub work in marimo)
-    mo.md(
-        """ Unfortunately, The push_to_hub function fails in Marimo notebooks because: It relies on IPython to extract code from notebook cells and Marimo does not use the IPython environment
-        """
-    )
-
+def _():
     # party_theme_tool.push_to_hub("{your_username}/catering_service_tool", token="<YOUR_HUGGINGFACEHUB_API_TOKEN>")
     return
 
@@ -324,14 +318,15 @@ def _(mo):
 
 
 @app.cell
-def _(CodeAgent, Tool, model):
+def _(CodeAgent, Tool, mo, model):
     from langchain.agents import load_tools
 
     _search_tool = Tool.from_langchain(load_tools(["serpapi"])[0])
     _agent = CodeAgent(tools=[_search_tool], model=model)
-    _agent.run(
+    _res = _agent.run(
         "Search for luxury entertainment ideas for a superhero-themed event, such as live performances and interactive experiences."
     )
+    mo.md(_res)
     return (load_tools,)
 
 

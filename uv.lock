@@ -56,7 +56,7 @@ wheels = [
 ]
 
 [[package]]
-name = "hg-agents-course-marimo"
+name = "hf-agents-course-marimo"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
