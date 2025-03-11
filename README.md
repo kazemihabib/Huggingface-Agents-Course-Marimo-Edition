@@ -124,11 +124,32 @@ login(os.environ["HF_TOKEN"])
 
 ### 2. Issues with `push_to_hub` Function
 
-The `push_to_hub` function fails in Marimo notebooks because:
-It relies on `IPython` to extract code from notebook cells
-and Marimo does not use the IPython environment
+The `push_to_hub` function fails in Marimo notebooks because it can't extract the tool source codes.
 
-**Workaround:** TO BE DONE
+**Workaround:** I created a monkey patch in [patches/smolagents_patches.py](patches/smolagents_patches.py)
+ that fixes source code extraction for Marimo environments, enabling Hub uploads.
+
+**Limitation:**  `push_to_hub` doesn't work with local-to-cell tool functions and tool classes (those prefixed with underscore in Marimo).
+ For technical details on why this decision has been made, check the Notes section in the patch file.
+
+**Note:** Notebooks that require `push_to_hub` functionality already have this patch applied.
+ To use it in other notebooks, add the following code:
+
+```python
+import os
+import sys
+from smolagents import CodeAgent, HfApiModel, Tool, tool, load_tool
+
+# Monkey patch smolagents library to make push_to_hub work with Marimo
+notebook_dir = os.path.dirname(os.path.abspath(__file__))  # Get notebook directory
+patches_dir = os.path.abspath(os.path.join(notebook_dir, '../../patches'))
+sys.path.append(patches_dir)
+
+from smolagents_patches import monekey_patched_get_source
+import smolagents.tools
+import smolagents.tool_validation
+smolagents.tools.get_source = monekey_patched_get_source
+smolagents.tool_validation.get_source = monekey_patched_get_source
 
 ## 🤝 Contributing
 

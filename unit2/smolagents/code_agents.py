@@ -233,7 +233,7 @@ def _(
     tool,
 ):
     @tool
-    def _suggest_menu(occasion: str) -> str:
+    def suggest_menu(occasion: str) -> str:
         """
         Suggests a menu based on the occasion.
         Args:
@@ -249,7 +249,7 @@ def _(
             return 'Custom menu for the butler.'
 
     @tool
-    def _catering_service_tool(query: str) -> str:
+    def catering_service_tool(query: str) -> str:
         """
         This tool returns the highest-rated catering service in Gotham City.
 
@@ -260,7 +260,7 @@ def _(
         best_service = max(services, key=services.get)
         return best_service
 
-    class _SuperheroPartyThemeTool(Tool):
+    class SuperheroPartyThemeTool(Tool):
         name = 'superhero_party_theme_generator'
         description = '\n    This tool suggests creative superhero-themed party ideas based on a category.\n    It returns a unique party theme idea.'
         inputs = {'category': {'type': 'string', 'description': "The type of superhero party (e.g., 'classic heroes', 'villain masquerade', 'futuristic Gotham')."}}
@@ -269,19 +269,14 @@ def _(
         def forward(self, category: str):
             themes = {'classic heroes': "Justice League Gala: Guests come dressed as their favorite DC heroes with themed cocktails like 'The Kryptonite Punch'.", 'villain masquerade': "Gotham Rogues' Ball: A mysterious masquerade where guests dress as classic Batman villains.", 'futuristic Gotham': 'Neo-Gotham Night: A cyberpunk-style party inspired by Batman Beyond, with neon decorations and futuristic gadgets.'}
             return themes.get(category.lower(), "Themed party idea not found. Try 'classic heroes', 'villain masquerade', or 'futuristic Gotham'.")
-    agent = CodeAgent(tools=[DuckDuckGoSearchTool(), VisitWebpageTool(), _suggest_menu, _catering_service_tool, _SuperheroPartyThemeTool()], model=HfApiModel(model_id), max_steps=10, verbosity_level=2)
+    agent = CodeAgent(tools=[DuckDuckGoSearchTool(), VisitWebpageTool(), suggest_menu, catering_service_tool, SuperheroPartyThemeTool()], model=HfApiModel(model_id), max_steps=10, verbosity_level=2)
     agent.run("Give me best playlist for a party at the Wayne's mansion. The party idea is a 'villain masquerade' theme")
-    return (agent,)
+    return SuperheroPartyThemeTool, agent, catering_service_tool, suggest_menu
 
 
 @app.cell
-def _(mo):
-    mo.md("""
-            ### TODO(Find a way to push agent to hub in marino)
-            Unfortunately, `push_to_hub` use `IPython` to get the code inside the cells.
-            As marino not uses IPython it will throw error
-    """)
-    # agent.push_to_hub('habibkazemi2/AlfredAgent2')
+def _(agent):
+    agent.push_to_hub('habibkazemi2/AlfredAgent')
     return
 
 
@@ -441,8 +436,20 @@ def _():
 
 
 @app.cell
-def _():
+def _(__file__, os):
     from smolagents import CodeAgent, DuckDuckGoSearchTool, HfApiModel, VisitWebpageTool, FinalAnswerTool, Tool, tool
+
+    # Monkey patch smolagents library to make push_to_hub work with Marimo
+    import sys
+    notebook_dir = os.path.dirname(os.path.abspath(__file__))  # Get notebook directory
+    patches_dir = os.path.abspath(os.path.join(notebook_dir, '../../patches'))
+    sys.path.append(patches_dir)
+
+    from smolagents_patches import monekey_patched_get_source
+    import smolagents.tools
+    import smolagents.tool_validation
+    smolagents.tools.get_source = monekey_patched_get_source
+    smolagents.tool_validation.get_source = monekey_patched_get_source
     return (
         CodeAgent,
         DuckDuckGoSearchTool,
@@ -450,6 +457,11 @@ def _():
         HfApiModel,
         Tool,
         VisitWebpageTool,
+        monekey_patched_get_source,
+        notebook_dir,
+        patches_dir,
+        smolagents,
+        sys,
         tool,
     )
 

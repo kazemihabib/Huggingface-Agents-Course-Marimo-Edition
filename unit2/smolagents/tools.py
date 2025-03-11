@@ -348,10 +348,34 @@ def _():
 
 
 @app.cell
-def _():
+def _(__file__):
     import os
     from smolagents import CodeAgent, HfApiModel, Tool, tool, load_tool
-    return CodeAgent, HfApiModel, Tool, load_tool, os, tool
+
+    # Monkey patch smolagents library to make push_to_hub work with Marimo
+    import sys
+    notebook_dir = os.path.dirname(os.path.abspath(__file__))  # Get notebook directory
+    patches_dir = os.path.abspath(os.path.join(notebook_dir, '../../patches'))
+    sys.path.append(patches_dir)
+
+    from smolagents_patches import monekey_patched_get_source
+    import smolagents.tools
+    import smolagents.tool_validation
+    smolagents.tools.get_source = monekey_patched_get_source
+    smolagents.tool_validation.get_source = monekey_patched_get_source
+    return (
+        CodeAgent,
+        HfApiModel,
+        Tool,
+        load_tool,
+        monekey_patched_get_source,
+        notebook_dir,
+        os,
+        patches_dir,
+        smolagents,
+        sys,
+        tool,
+    )
 
 
 if __name__ == "__main__":
