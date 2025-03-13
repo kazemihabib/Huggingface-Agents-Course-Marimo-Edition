@@ -94,12 +94,18 @@ def monekey_patched_get_source(obj) -> str:
         
     if _is_marimo():
         try:
-            file = inspect.getfile(obj)
-            all_cells = Path(file).read_text()
+            import marimo
+
+            file_path = inspect.getabsfile(obj)
+            app = marimo._ast.codegen.get_app(file_path)
+            app._maybe_initialize()
+            all_cells = "\n".join([app._graph.cells[cell_id].code for cell_id in app._execution_order]).strip()
             
             tree = ast.parse(all_cells)
             for node in ast.walk(tree):
-                if isinstance(node, (ast.ClassDef, ast.FunctionDef)) and node.name == obj.__name__:
+                # I put only ClassDef here, because file_path for functions is not useful and 
+                # functions are being handled using `inspect.getsource` above
+                if isinstance(node, (ast.ClassDef)) and node.name == obj.__name__:
                     return textwrap.dedent("\n".join(all_cells.split("\n")[node.lineno - 1 : node.end_lineno])).strip()
         except (OSError, TypeError) as e:
             # Marimo is available but we couldn't find the source code, let's raise the error
