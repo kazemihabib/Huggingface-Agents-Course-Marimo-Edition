@@ -87,6 +87,7 @@ Below is a checklist of notebooks from the original HuggingFace Agents course an
   - [x] retrieval_agents.ipynb --> retrieval_agents.py
   - [x] vision_agents.ipynb --> vision_agents.py
   - [x] multiagent_notebook.ipynb --> multiagent.py
+  - [x] vision_web_browser.py --> vision_web_browser_marimo.py
 - Building with LlamaIndex
   - [ ] components.ipynb --> components.py
   - [ ] tools.ipynb --> tools.py

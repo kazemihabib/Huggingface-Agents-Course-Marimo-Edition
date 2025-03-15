@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "helium==5.1.1",
+#     "pillow==11.1.0",
+#     "python-dotenv==1.0.1",
+#     "selenium==4.29.0",
+#     "smolagents[litellm]==1.11.0",
+# ]
+# ///
 import argparse
 from io import BytesIO
 from time import sleep
@@ -190,7 +200,6 @@ def main():
 
     # Parse command line arguments
     args = parse_arguments()
-
     # Initialize the model based on the provided arguments
     model = load_model(args.model_type, args.model_id)
 
@@ -199,7 +208,7 @@ def main():
     agent = initialize_agent(model)
 
     # Run the agent with the provided prompt
-    agent.python_executor("from helium import *", agent.state)
+    agent.python_executor("from helium import *")
     agent.run(args.prompt + helium_instructions)
 
 
