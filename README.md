@@ -92,7 +92,7 @@ Below is a checklist of notebooks from the original HuggingFace Agents course an
   - [x] components.ipynb --> components.py
   - [x] tools.ipynb --> tools.py
   - [x] agents.ipynb --> agents.py
-  - [ ] workflows.ipynb --> workflows.py
+  - [x] workflows.ipynb --> workflows.py
 
 ### Bonus Units
 
