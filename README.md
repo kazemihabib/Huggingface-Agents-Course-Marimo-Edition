@@ -90,7 +90,7 @@ Below is a checklist of notebooks from the original HuggingFace Agents course an
   - [x] vision_web_browser.py --> vision_web_browser_marimo.py
 - Building with LlamaIndex
   - [x] components.ipynb --> components.py
-  - [ ] tools.ipynb --> tools.py
+  - [x] tools.ipynb --> tools.py
   - [ ] agents.ipynb --> agents.py
   - [ ] workflows.ipynb --> workflows.py
 
