@@ -91,7 +91,7 @@ Below is a checklist of notebooks from the original HuggingFace Agents course an
 - Building with LlamaIndex
   - [x] components.ipynb --> components.py
   - [x] tools.ipynb --> tools.py
-  - [ ] agents.ipynb --> agents.py
+  - [x] agents.ipynb --> agents.py
   - [ ] workflows.ipynb --> workflows.py
 
 ### Bonus Units
